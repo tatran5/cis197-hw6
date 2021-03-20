@@ -7,10 +7,10 @@ const { db } = require('../models/user');
 const router = express.Router()
 
 router.get('/', async (req, res) => {
-	if (req.session.username === '') {
+	if (req.session.userId === '') {
 		res.send('Currently not logged in')
 	} else {
-		console.log(req.session.username)
+		console.log(req.session.userId)
 		res.send('Currently logged in')		
 	}
 })
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 router.post('/signup', (req, res) => {
 	const { username, password } = req.body;
 
-	if (req.session.username !== '') {
+	if (req.session.userId !== '') {
 		res.status(400).send('Cannot sign up because still logged in')
 		return;
 	}
@@ -47,10 +47,10 @@ router.post('/signup', (req, res) => {
 	})
 });
 
-router.post('/login', isAuthenticated, (req, res) => {
+router.post('/login', (req, res) => {
 	const { username, password } = req.body
 
-	if (req.session.username !== '') {
+	if (req.session.userId !== '') {
 		res.status(400).send('Cannot log in because still logged in');
 		return;
 	}
@@ -62,8 +62,7 @@ router.post('/login', isAuthenticated, (req, res) => {
 		}
 		if (user) {
 			console.log(user)
-      req.session.username = username
-      req.session.password = password
+      req.session.userId = user._id
       res.send(`logged in`)
     } else {
       res.send(`failed to log in - wrong username or password`)
@@ -71,8 +70,7 @@ router.post('/login', isAuthenticated, (req, res) => {
   })
 })
 
-router.post('/logout', (req, res) => {
-	req.session.username = ''
+router.post('/logout', isAuthenticated, (req, res) => {
   res.send('user logged out')
 })
 
