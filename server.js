@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 const cookieSession = require('cookie-session')
 const path = require('path')
+let bodyParser = require('body-parser');
 
 console.log('running index.js');
 
@@ -24,6 +25,8 @@ mongoose.connect(MONGO_URI, {
 });
 
 app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
 	cookieSession({
@@ -39,10 +42,10 @@ app.use('/api', APIRouter)
 
 
 // IMPORTANT: U NEED THIS
-// app.get('/favicon.ico', (_, res) => res.status(404).send())
-// app.get('*', (_, res) => {
-//   res.sendFile(path.join(__dirname, '../dist/index.html'))
-// })
+app.get('/favicon.ico', (_, res) => res.status(404).send())
+app.get('*', (_, res) => {
+  res.sendFile(path.join(__dirname, '../dist/index.html'))
+})
 
 app.listen(3000, () => {
   console.log('listening on 3000')
