@@ -39,8 +39,6 @@ app.use(
 app.use('/account', AccountRouter);
 app.use('/api', APIRouter)
 
-
-
 // IMPORTANT: U NEED THIS
 app.get('/favicon.ico', (_, res) => res.status(404).send())
 app.get('*', (_, res) => {

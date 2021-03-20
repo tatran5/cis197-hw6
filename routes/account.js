@@ -47,7 +47,7 @@ router.post('/signup', (req, res) => {
 	})
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', isAuthenticated, (req, res) => {
 	const { username, password } = req.body
 
 	if (req.session.username !== '') {
