@@ -4,8 +4,6 @@ const cookieSession = require('cookie-session')
 const path = require('path')
 let bodyParser = require('body-parser');
 
-console.log('running index.js');
-
 const AccountRouter = require('./routes/account')
 const APIRouter = require('./routes/api')
 
@@ -43,6 +41,15 @@ app.use('/api', APIRouter)
 app.get('/favicon.ico', (_, res) => res.status(404).send())
 app.get('*', (_, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'))
+})
+
+// error handler
+app.use((err, req, res, next) => {
+	if (err) {
+		err.stack = ''
+ 	  next(err)
+	} 
+	res.status(200)
 })
 
 app.listen(3000, () => {

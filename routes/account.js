@@ -1,77 +1,73 @@
 // This file should have routes to handle login systen
 
 const User = require('../models/user')
-
+const { isAuthenticated } = require('../middlewares/isAuthenticated')
 const express = require('express');
-const { db } = require('../models/user');
 const router = express.Router()
 
-router.get('/', async (req, res) => {
-	if (req.session.userId === '') {
-		res.send('Currently not logged in')
-	} else {
-		console.log(req.session.userId)
-		res.send('Currently logged in')		
-	}
+router.get('/', isAuthenticated, async (req, res) => {
+	res.send('Currently logged in')
 })
 
-router.post('/signup', (req, res) => {
+router.post('/signup', async (req, res, next) => {
 	const { username, password } = req.body;
 
-	if (req.session.userId !== '') {
-		res.status(400).send('Cannot sign up because still logged in')
-		return;
+	if (req.session.userId) {
+		const err = new Error('Cannot sign up because still logged in')
+		err.statusCode = 400
+		next(err)
 	}
-	
-	User.findOne({ 'username' : username }, (err, user) => {
-		if (err) {
-			res.status(500).send(`Cannot check for existing user - something wrong happened on our end`)
-		}
+
+	try {
+		let user = await User.findOne({ 'username': username })
+
 		if (user) {
-			console.log(user)
-			res.status(400).send(`A username like this already exists`)
-		} else {
-			const user = new User({
-				username: username,
-				password: password
-			})
-			user.save()
-			.then(() => {
-				res.status(200).send('A new account is created!')
-			})
-			.catch(e => {
-				console.log(e)
-				res.status(500).send('Cannot save new account - something wrong happened on our end')
-			})
+			const err = new Error (`A username like this already exists`)
+			err.statusCode = 400
+			next(err)
 		}
-	})
+
+		user = await (new User({
+			username: username,
+			password: password
+		})).save()
+
+		res.status(200).send('A new account is created!')
+	} catch (e) {
+		next(e)
+	}
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res, next) => {
 	const { username, password } = req.body
 
-	if (req.session.userId !== '') {
-		res.status(400).send('Cannot log in because still logged in');
-		return;
-	}
-
-  User.findOne({ 'username' : username, 'password' : password }, (err, user) => {
-    if (err) {
-			console.log('ERRRORRR');
-			res.status(500).send(`ERROR`)
+	try {
+		if (req.session.userId) {
+			let err = new Error('Cannot log in because still logged in');
+			err.statusCode = 400
+			next(err)
 		}
-		if (user) {
-			console.log(user)
-      req.session.userId = user._id
-      res.send(`logged in`)
-    } else {
-      res.send(`failed to log in - wrong username or password`)
-    }
-  })
+
+		const user = await User.findOne({ 'username': username, 'password': password })
+		if (!user) {
+			let err = new Error('Failed to log in - wrong username or password');
+			err.statusCode = 400
+			next(err)
+		}
+
+		req.session.userId = user._id
+		res.status(200).send(`Succesfully logged in`)
+
+	} catch (e) {
+		e.statusCode = 500
+		e.message = 'Something wrong with the database'
+		next(e)
+	}
 })
 
-router.post('/logout', isAuthenticated, (req, res) => {
-  res.send('user logged out')
+router.post('/logout', isAuthenticated, (req, res, next) => {
+	req.session.userId = null
+	res.status(200).send('user logged out')
 })
 
 module.exports = router
