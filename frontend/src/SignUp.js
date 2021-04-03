@@ -14,7 +14,7 @@ const SignUp = () => {
 		if (!username || !password) return alert('Username and password cannot be empty')
 		try {
 			await axios.post('/account/signup', { username, password })
-		} catch(e) {
+		} catch (e) {
 			const status = e.response.status
 			if (status === 400) alert('Username already exists!')
 			else alert('Something is wrong with our system :( Please try again later')
@@ -28,21 +28,31 @@ const SignUp = () => {
 	}
 
 	return (
-    <div className='SignUp'>
-			<div className='page-title' >Sign Up</div>
-      <div className='input-text-label'>Username:</div>
-  		<input className='input-text' type='text' 
-				name='fname' 
-				onChange={e => setUsername(e.target.value)}/> <br/>
-			<div className='input-text-label'>Password:</div>
-  		<input className='input-text' type='text'
-				name='fname' 
-				onChange={e => setPassword(e.target.value)}/>
-			<div className='submit' onClick={e => clickSubmit()}>Sign Up</div>
-			<div className='change-site'>Have an account?
-				<span className='link' onClick={e => clickLogin()}> Log in here!</span>
+		<div className='SignUp'>
+			<div className='navbar row '>
+				<div className='page-title navbar-header navbar-brand	col'>Campuswire Lite </div>
 			</div>
-    </div>
+			<div className='h1 text-center' >Sign Up</div>
+			<div className='input'>
+				<div className="form-group">
+					<label htmlFor="input-username">Username</label>
+					<input type="text" className="form-control" id="input-username"
+						placeholder="Enter username..."
+						onChange={e => setUsername(e.target.value)} />
+				</div>
+				<div className="form-group">
+					<label htmlFor="input-username">Password</label>
+					<input type="password" className="form-control" id="input-username"
+						placeholder="Enter password..."
+						onChange={e => setPassword(e.target.value)} />
+				</div>
+				<button type="button" className="btn btn-info"
+					data-dismiss="modal" onClick={_ => clickSubmit()}>Log in</button>
+				<div className='change-site text-center'>Already have an account?
+				<span className='link' onClick={e => clickLogin()}> Log in here!</span>
+				</div>
+			</div>
+		</div>
   )
 }
 

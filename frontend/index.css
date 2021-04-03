@@ -2,8 +2,16 @@
 	width: 100%
 }
 
+.change-site {
+	margin: 10px 0 10px 0;
+}
+
 .col-0 {
 	margin-right: 10px;	
+}
+
+.input {
+	padding: 0 30vw 0 30vw;
 }
 
 .row {

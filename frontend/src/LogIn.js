@@ -3,11 +3,11 @@ import { useHistory } from "react-router-dom";
 import axios from 'axios'
 
 const LogIn = () => {
-	const [ username, setUsername ] = useState('')
-	const [ password, setPassword ] = useState('')
+	const [username, setUsername] = useState('')
+	const [password, setPassword] = useState('')
 	const history = useHistory();
 
-	
+
 	const clickSignUp = () => {
 		history.push("/signup");
 	}
@@ -17,7 +17,7 @@ const LogIn = () => {
 		try {
 			await axios.post('/account/login', { username, password })
 			history.push('/')
-		} catch(e) {
+		} catch (e) {
 			const status = e.response.status
 			if (status === 400) return alert('An account is already logged in. You need to log out first from home page')
 			else return alert('Something is wrong with our system :( Please try again later')
@@ -25,22 +25,32 @@ const LogIn = () => {
 	}
 
 	return (
-    <div className='LogIn'>
-			<div className='page-title' >Log In</div>
-      <div className='input-text-label'>Username:</div>
-  		<input className='input-text' type='text' 
-				name='fname' 
-				onChange={e => setUsername(e.target.value)}/> <br/>
-			<div className='input-text-label'>Password:</div>
-  		<input className='input-text' type='text'
-				name='fname' 
-				onChange={e => setPassword(e.target.value)}/>
-			<div className='submit' onClick={e => clickSubmit()}>Log In</div>
-			<div className='change-site'>Don't have an account?
+		<div className='LogIn'>
+		<div className='navbar row '>
+			<div className='page-title navbar-header navbar-brand	col'>Campuswire Lite </div>
+		</div>
+		<div className='h1 text-center' >Log In</div>
+		<div className='input'>
+			<div className="form-group">
+				<label htmlFor="input-username">Username</label>
+				<input type="text" className="form-control" id="input-username"
+					placeholder="Enter username..."
+					onChange={e => setUsername(e.target.value)} />
+			</div>
+			<div className="form-group">
+				<label htmlFor="input-username">Password</label>
+				<input type="password" className="form-control" id="input-username"
+					placeholder="Enter password..."
+					onChange={e => setPassword(e.target.value)} />
+			</div>
+			<button type="button" className="btn btn-info"
+				data-dismiss="modal" onClick={_ => clickSubmit()}>Log in</button>
+			<div className='change-site text-center'>Don't have an account?
 				<span className='link' onClick={e => clickSignUp()}> Sign up here!</span>
 			</div>
-    </div>
-  )
+		</div>
+	</div>
+	)
 }
 
 export default LogIn

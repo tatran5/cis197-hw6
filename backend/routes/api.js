@@ -23,7 +23,6 @@ router.get('/questions/:id', async (req, res, next) => {
   const {id} = req.params
 	try {
 		const question = await Question.findById(id)
-		console.log(question)
 		res.status(200).send(question.toObject())
 	} catch (e) {
 		e.statusCode = 500

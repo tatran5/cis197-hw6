@@ -14,9 +14,8 @@ const Home = () => {
 	const clickLogOut = async () => {
 		try {
 			await axios.post('/account/logout')
-			history.push('/login')
+			// history.push('/login')
 		} catch (e) {
-			console.log(e)
 			alert('Something is wrong with our system so we cannot log you out :( Please try again later')
 		}
 	}
@@ -26,7 +25,6 @@ const Home = () => {
 	}
 
 	const clickQuestion = async (id) => {
-		console.log(id)
 		setQuestionDetail(<QuestionDetail id={id} username={username}/>)
 	}
 
@@ -35,7 +33,6 @@ const Home = () => {
 		try {
 			await axios.post('/api/questions/add', { questionText: newQuestion, author: username })
 		} catch (e) {
-			console.log(e)
 			alert('Something is wrong with our system so we cannot add your question :( Please try again later')
 		}
 	}

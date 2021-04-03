@@ -14,7 +14,6 @@ router.get('/', isAuthenticated, async (req, res) => {
 			err.status(500)
 			next(err)
 		}
-		console.log(user.username)
 		res.send(user.username)
 	} catch (err) {
 		next(err)
@@ -22,7 +21,6 @@ router.get('/', isAuthenticated, async (req, res) => {
 })
 
 router.post('/signup', async (req, res, next) => {
-	console.log('/signup')
   const { username, password } = req.body
 
   if (req.session.userId) {
