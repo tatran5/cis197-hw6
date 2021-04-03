@@ -20,7 +20,6 @@ router.get('/questions', (req, res, next) => {
 
 // fetching the question with the given id
 router.get('/questions/:id', async (req, res, next) => {
-	console.log('herehrehr')
   const {id} = req.params
 	try {
 		const question = await Question.findById(id)
@@ -66,7 +65,7 @@ router.post('/questions/answer', isAuthenticated, async (req, res, next) => {
       next(err)
     }
 
-    const existingQuestion = await Question.findByIdAndUpdate(questionId, { answer })
+    const existingQuestion = await Question.findByIdAndUpdate(questionId, { answer: answer })
     if (!existingQuestion) {
       const err = new Error('No question with such id!')
       err.statusCode = 400
@@ -74,6 +73,7 @@ router.post('/questions/answer', isAuthenticated, async (req, res, next) => {
     }
     res.status(200)
   } catch (e) {
+		console.log(e)
     e.statusCode = 500
     e.message = 'Something wrong with the database'
     next(e)

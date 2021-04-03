@@ -78,8 +78,8 @@ const Home = () => {
 
 	return (
 		<>
-			<div className='navbar'>
-				<div className='page-title navbar-header navbar-brand	'>Campuswire Lite </div>
+			<div className='navbar row'>
+				<div className='page-title navbar-header navbar-brand	col-10'>Campuswire Lite </div>
 				{loggedIn ?
 					<>
 						<div className='name'>Hi {username}</div>
@@ -91,6 +91,7 @@ const Home = () => {
 						to do so
 					</div>
 				}
+				
 			</div>
 			<div className='row'>
 				<div className='question-list col-4'>

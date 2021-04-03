@@ -8,22 +8,36 @@ const QuestionDetail = ({ id, username }) => {
 	const [inputAnswer, setInputAnswer] = useState('')
 
 	const fetchDetails = async () => {
+		console.log('FETCHHHHH')
 		try {
 			const { data } = await axios.get(`/api/questions/${id}`)
 			// console.log(data.status)
 			console.log(data)
 			setQuestion(data.questionText)
 			setAuthor(data.author)
-			if (answer) setAnswer(data.answer)
+			setAnswer(data.answer)
 		} catch (e) {
 			console.log(e)
 			alert(`Something wrong happened to our system when we tried getting the details of this question :( Please try again later`)
 		}
 	}
 
+	const submitAnswer = async() => {
+		try {
+			const { data } = await axios.post(`/api/questions/answer`, {
+				questionId: id,
+				answer: inputAnswer 
+			})
+			console.log(data)
+			setInputAnswer('')
+		} catch (e) {
+			return alert(`Something wrong happened to our system when we tried updating your answer :( Please try again later`)
+		}
+	}
+
 	useEffect(() => {
 		fetchDetails()
-	}, [id, username])
+	})
 
 	useEffect(() => {
 		const intervalID = setInterval(fetchDetails, 2000)
@@ -44,12 +58,18 @@ const QuestionDetail = ({ id, username }) => {
 				<p className='answer'>{answer}</p>
 			</div>
 			{ username ?
-				<div className="detail-container form-group">
-					<label htmlFor="new-answer-text">Update answer:</label>
-					<input type="text" className="form-control" id="new-question-text"
-						placeholder="New answer..."
-						onChange={e => setInputAnswer(e.target.value)} />
-				</div>
+				<>
+					<div className="detail-container">
+						<div className="form-group">
+							<label htmlFor="new-answer-text">Update answer:</label>
+							<input type="text" className="form-control" id="new-question-text"
+								placeholder="New answer..."
+								onChange={e => setInputAnswer(e.target.value)} />
+						</div>
+						<button type="button" className="btn btn-info"
+							onClick={_ => submitAnswer()}>Submit</button>
+					</div>
+				</>
 				: <></>
 			}
 		</>
