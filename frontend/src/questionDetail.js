@@ -29,7 +29,7 @@ const QuestionDetail = ({ id, username }) => {
 				answer: inputAnswer 
 			})
 			console.log(data)
-			setInputAnswer('')
+setInputAnswer('')
 		} catch (e) {
 			return alert(`Something wrong happened to our system when we tried updating your answer :( Please try again later`)
 		}
@@ -50,18 +50,18 @@ const QuestionDetail = ({ id, username }) => {
 		<>
 			<h2 className='question'>{question}</h2>
 			<div className='detail-container'>
-				<div className='author-label h6'>Author: </div>
+				<div className='author-label h6'>Author</div>
 				<p className='author'>{author}</p>
 			</div>
 			<div className='detail-container'>
-				<div className='answer-label h6'>Answer:</div>
+				<div className='answer-label h6'>Answer</div>
 				<p className='answer'>{answer}</p>
 			</div>
 			{ username ?
 				<>
 					<div className="detail-container">
 						<div className="form-group">
-							<label htmlFor="new-answer-text">Update answer:</label>
+							<label htmlFor="new-answer-text">Update answer</label>
 							<input type="text" className="form-control" id="new-question-text"
 								placeholder="New answer..."
 								onChange={e => setInputAnswer(e.target.value)} />

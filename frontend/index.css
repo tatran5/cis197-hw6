@@ -2,6 +2,10 @@
 	width: 100%
 }
 
+.col-0 {
+	margin-right: 10px;	
+}
+
 .row {
 	margin: 10px;
 }
@@ -34,5 +38,10 @@
 	margin: 10px 0 10px 0;
 	padding: 10px;
 	background-color: white;
+}
+
+span {
+	font-weight: bold;
+	color: #17a2b8;
 }
 

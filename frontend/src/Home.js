@@ -79,19 +79,19 @@ const Home = () => {
 	return (
 		<>
 			<div className='navbar row'>
-				<div className='page-title navbar-header navbar-brand	col-10'>Campuswire Lite </div>
+				<div className='page-title navbar-header navbar-brand	col'>Campuswire Lite </div>
 				{loggedIn ?
 					<>
-						<div className='name'>Hi {username}</div>
-						<div className='log-out' onClick={e => clickLogOut()} >Log out</div>
+						<div className='name col-0'>Hi {username}</div>
+						<div className='log-out col-0' onClick={e => clickLogOut()} >Log out</div>
 					</>
 					:
-					<div>You have not logged in yet. Click
+					<div className='col'>You have not logged in yet. Click
 						<span className='link' onClick={e => clickLogIn()}> here </span>
 						to do so
 					</div>
 				}
-				
+
 			</div>
 			<div className='row'>
 				<div className='question-list col-4'>
