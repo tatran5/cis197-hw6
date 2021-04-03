@@ -1,0 +1,38 @@
+.btn {
+	width: 100%
+}
+
+.row {
+	margin: 10px;
+}
+
+.detail-container {
+	color:black;
+	background-color: white;
+	padding: 10px;
+	border-radius: 10px;
+	margin: 10px 0 10px 0;
+}
+
+.question-detail {
+	height: fit-content;	
+	color: white;
+	border-radius: 10px;
+	margin-left: 10px;
+	padding: 10px;
+	background-color: #17a2b8;
+}
+
+.question-list {
+	height: fit-content;
+	border-radius: 10px;
+	padding: 10px 10px 0px 10px;
+	background-color: rgb(93, 0, 150, 0.1);
+}
+
+.question-preview {
+	border-radius: 10px;
+	margin: 10px 0 10px 0;
+	padding: 10px;
+	background-color: white;
+}
