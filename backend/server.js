@@ -36,6 +36,15 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'))
 })
 
+app.use((err, req, res, next) => {
+  if (err) {
+    // eslint-disable-next-line no-param-reassign
+    err.stack = ''
+    next(err)
+  }
+  res.status(200)
+})
+
 app.listen(3000, () => {
   console.log('mongoDB is connected')
   console.log('listening on 3000')
