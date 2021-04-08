@@ -36,6 +36,7 @@ app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../dist/index.html'))
 })
 
+// error handler
 app.use((err, req, res, next) => {
   if (err) {
     // eslint-disable-next-line no-param-reassign
